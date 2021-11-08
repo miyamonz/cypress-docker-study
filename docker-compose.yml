@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  web:
+    build: ./front
+    ports:
+      - "3001:3000"
+  cypress:
+    build: ./cypress
+    depends_on:
+      - web
+    environment:
+      - CYPRESS_baseUrl=http://web:3000
+      - CYPRESS_browser=chrome
+      - CYPRESS_screenshotsFolder=/results/screenshots
+      - CYPRESS_videosFolder=/results/videos
+    volumes:
+      - ./cypress:/e2e/cypress
+      - ./results:/results
